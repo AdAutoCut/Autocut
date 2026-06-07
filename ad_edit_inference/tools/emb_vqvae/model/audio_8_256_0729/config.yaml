@@ -1,0 +1,43 @@
+experiment:
+  name: audio_cosloss
+model:
+  type: rqvae
+  input_feature_size: 2048
+  num_head: 8
+  codebook_dim: 256
+  codebook_size: 256
+  pretrain_embedding_path: None
+  encoder_mlp_size:
+  - 1024
+  - 512
+  decoder_mlp_size:
+  - 512
+  - 1024
+  shared_codebook: false
+  save_dir: /data/phd/qinsizhong/emb_vqvae/model
+wandb:
+  is_use: true
+  project: video-frame-vae
+infer:
+  infer_path: /data/phd/qinsizhong/emb_vqvae/infer/photoid2index.txt
+trainer:
+  learning_rate: 0.001
+  min_lr: 2.0e-05
+  weight_decay: 0.0001
+  max_epoch: 50
+  plot_every: 100
+  save_every: 10
+  warmup: 0
+  loss_type: cos
+  recon_weight: 1.0
+  commit_weight: 0.0
+load:
+  model_path: /data/phd/qinsizhong/emb_vqvae/model/audio_cosloss_rqvae_CBsize256_CBdim256_CBhead8_lr_1.00e-03_share_False2025-07-29-14:29:20
+  epoch_id: 49
+dataset:
+  data_root: /data/phd/qinsizhong/emb_vqvae/data
+  batch_size: 8192
+  num_workers: 8
+  train_file: /data/phd/qinsizhong/ad_edit_inference/ex_incycle2/audio_db_train.pt
+  test_file: /data/phd/qinsizhong/ad_edit_inference/ex_incycle2/audio_db_eval.pt
+  infer_file: /data/phd/qinsizhong/ad_edit_inference/ex_incycle2/audio_db_eval.pt

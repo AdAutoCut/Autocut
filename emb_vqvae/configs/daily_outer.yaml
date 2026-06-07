@@ -1,0 +1,33 @@
+experiment:
+    name: "rqvae_L1loss_outer_train"
+
+model:
+    type: "rqvae" # mhead
+    input_feature_size: 512
+    num_head: 8
+    codebook_sub_dim: 16
+    codebook_size: 512
+    pretrain_embedding_path: None
+    encoder_mlp_size: [512, 512, 512] # [512, 256, 128]
+    decoder_mlp_size: [512, 512, 512] # [512, 256, 128]
+
+trainer:
+    learning_rate: 1e-3    
+    min_lr: 2e-5
+    weight_decay: 0.0001
+    max_epoch: 100
+    plot_every: 100
+    save_every: 10
+    warmup: 0
+    loss_type: 'L1' # [L1, L2]
+    recon_weight: 1.
+    commit_weight: 1.
+
+load:
+    # from '/data/jiajian/code/emb_vqvae/exps/rqvae_L2loss_outer_train_ReconWeight50_rqvae_CBsize512_CBdim16_CBhead8_lr_1.00e-03_2024-11-08-11:09:41'
+    model_path: '/phd/content_ID/online_server/outer_loop/dnc/photo_sid/epoch_99.pth'
+
+
+dataset:
+    batch_size: 8192  # train batchsize; test batchsize is fixed as 8192
+    num_workers: 8

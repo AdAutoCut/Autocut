@@ -1,0 +1,51 @@
+### model
+# model_name_or_path: saves/qwen-8b-emb-0722-1e-4
+model_name_or_path: saves/qwen-8b-full-0722/checkpoint-6000
+resize_vocab: false
+
+### method
+stage: pt
+# do_train: false
+do_eval: true
+finetuning_type: full
+enable_liger_kernel: true # 推荐默认开启，显著节省显存和加速
+packing: true
+# deepspeed: LLaMA-Factory/examples/deepspeed/ds_z2_config.json
+# flash_attn: fa3
+
+### dataset
+dataset_dir: /data/phd/qinsizhong/llm_factory_test/data/
+# dataset: ad_train_0722
+# dataset: c4_demo
+# eval_dataset: incycle_1d_eval
+cutoff_len: 8096
+# max_samples: 1000
+overwrite_cache: true
+preprocessing_num_workers: 16
+
+### output
+output_dir: saves/qwen-8b-full-0723-1e-4-eval
+logging_steps: 10
+save_steps: 1000
+plot_loss: true
+overwrite_output_dir: true
+report_to: none
+
+### train
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 1
+learning_rate: 1.0e-4
+num_train_epochs: 10
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+# fp16: true
+bf16: true
+ddp_timeout: 180000000
+
+### eval
+eval_dataset: ad_eval_0722
+# val_size: 0.1
+per_device_eval_batch_size: 4
+eval_strategy: 'steps'
+eval_steps: 1000
+eval_on_start: true

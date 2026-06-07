@@ -1,0 +1,46 @@
+experiment:
+    name: "rqvae_L2loss"
+
+model:
+    type: "rqvae" # mhead
+    input_feature_size: 128
+    num_head: 24
+    codebook_sub_dim: 16
+    codebook_size: 256
+    pretrain_embedding_path: None
+    encoder_mlp_size: [256, 256] # [512, 256, 128]
+    decoder_mlp_size: [256, 256] # [512, 256, 128]
+    shared_codebook: False
+    save_dir: '/data/phd/qinsizhong/emb_vqvae/model'
+
+wandb:
+    is_use: True
+    project: 'video-frame-vae'
+
+infer:
+    infer_path: '/data/phd/qinsizhong/emb_vqvae/infer/photoid2index.txt'
+    
+trainer:
+    learning_rate: 1e-3    
+    min_lr: 2e-5
+    weight_decay: 0.0001
+    max_epoch: 100
+    plot_every: 100
+    save_every: 10
+    warmup: 0
+    loss_type: 'cos' # [L1, L2]
+    recon_weight: 1.
+    commit_weight: 0.
+
+load:
+    model_path: '/data/phd/qinsizhong/emb_vqvae/model/rqvae_L2loss_rqvae_CBsize256_CBdim16_CBhead8_lr_1.00e-03_2025-07-01-20:58:54'
+    epoch_id: 99
+
+
+dataset:
+    data_root: '/data/phd/qinsizhong/emb_vqvae/data'
+    batch_size: 2048  # train batchsize; test batchsize is fixed as 8192
+    num_workers: 8
+    train_file: 'incycle_train.pt'
+    test_file: 'incycle_test.pt'
+    infer_file: 'incycle_test.pt'

@@ -1,0 +1,43 @@
+experiment:
+  name: rqvae_cosloss
+model:
+  type: rqvae
+  input_feature_size: 2048
+  num_head: 8
+  codebook_dim: 512
+  codebook_size: 1024
+  pretrain_embedding_path: None
+  encoder_mlp_size:
+  - 2048
+  - 1024
+  decoder_mlp_size:
+  - 1024
+  - 2048
+  shared_codebook: false
+  save_dir: /data/phd/miltonzhou/emb_vqvae_recall/model
+wandb:
+  is_use: false
+  project: audio-wav-vae
+infer:
+  infer_path: /data/phd/miltonzhou/emb_vqvae_recall/infer/photoid2index.txt
+trainer:
+  learning_rate: 0.001
+  min_lr: 2.0e-05
+  weight_decay: 0.0001
+  max_epoch: 100
+  plot_every: 100
+  save_every: 10
+  warmup: 0
+  loss_type: cos
+  recon_weight: 1.0
+  commit_weight: 0.0
+load:
+  model_path: model/rqvae_cosloss_rqvae_CBsize1024_CBdim64_CBhead8_lr_1.00e-03_2025-07-10-13:36:27
+  epoch_id: 99
+dataset:
+  data_root: /data/phd/miltonzhou/emb_vqvae_recall/data
+  batch_size: 1024
+  num_workers: 8
+  train_file: /data/phd/miltonzhou/emb_vqvae_recall/train_embeddings.pt
+  test_file: /data/phd/miltonzhou/emb_vqvae_recall/test_embeddings.pt
+  infer_file: /data/phd/miltonzhou/emb_vqvae_recall/test_embeddings.pt

@@ -1,0 +1,8 @@
+model_name_or_path: /data/phd/qinsizhong/llm_factory_test/saves/qwen-8b-full-0831/checkpoint-6000
+tokenizer_name_or_path: /data/phd/qinsizhong/llm_factory_test/saves/qwen-8b-full-0831
+template: qwen3
+infer_backend: vllm
+infer_dtype: auto
+default_system: ""
+skip_special_tokens: false
+# vllm_config: '{"tensor_parallel_size":4,"gpu_memory_utilization":0.9,"swap_space":16}'

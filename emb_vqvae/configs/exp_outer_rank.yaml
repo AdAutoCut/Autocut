@@ -1,0 +1,45 @@
+experiment:
+    name: "rqvae_L1loss_outer_rank_train"
+
+model:
+    type: "rqvae" # mhead
+    input_feature_size: 512
+    num_head: 8
+    codebook_sub_dim: 16
+    codebook_size: 512
+    pretrain_embedding_path: None
+    encoder_mlp_size: [512, 512, 512] # [512, 256, 128]
+    decoder_mlp_size: [512, 512, 512] # [512, 256, 128]
+    save_dir: '/data/jiajian/code/emb_vqvae/exps'
+
+wandb:
+    is_use: True
+    project: 'ContentID'
+
+infer:
+    infer_path: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/online_training_1011_1018/photoid2index.txt'
+    
+trainer:
+    learning_rate: 1e-3    
+    min_lr: 2e-5
+    weight_decay: 0.0001
+    max_epoch: 100
+    plot_every: 100
+    save_every: 10
+    warmup: 0
+    loss_type: 'L1' # [L1, L2]
+    recon_weight: 1.
+    commit_weight: 1.
+
+load:
+    model_path: '/data/jiajian/code/emb_vqvae/exps'
+    epoch_id: 99
+
+
+dataset:
+    data_root: '/phd/content_ID/outer_rank/quantizer/mmu_embedding'
+    train_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_train_1011-1018.pkl'
+    test_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_test_1011-1018.pkl'
+    infer_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_1011-1018.pkl'
+    batch_size: 8192  # train batchsize; test batchsize is fixed as 8192
+    num_workers: 8

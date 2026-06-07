@@ -1,0 +1,8 @@
+### model
+model_name_or_path: saves/qwen-8b-full-0726-epoch10
+# model_name_or_path: model/Qwen3-0.6B
+skip_special_tokens: false
+# repetition_penalty: 1
+# temperature: 0.7
+# top_p: 0.8
+infer_backend: huggingface

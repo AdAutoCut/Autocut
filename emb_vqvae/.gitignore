@@ -1,0 +1,6 @@
+runs/*
+ckpts/*
+*.pyc
+*.pt
+wandb/*
+model/*

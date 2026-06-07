@@ -1,0 +1,45 @@
+experiment:
+    name: "rqvae_L1loss"
+
+model:
+    type: "rqvae" # mhead
+    input_feature_size: 1024
+    num_head: 4
+    codebook_sub_dim: 16
+    codebook_size: 256
+    pretrain_embedding_path: None
+    encoder_mlp_size: [1024, 512, 1024] # [512, 256, 128]
+    decoder_mlp_size: [1024, 512, 1024] # [512, 256, 128]
+    save_dir: '/data/phd/liudan/data/emb_vqvae/exps'
+
+wandb:
+    is_use: True
+    project: 'RQ-VAE'
+
+infer:
+    infer_path: '/data/phd/liudan/data/emb_vqvae/infer_results.txt'
+    
+trainer:
+    learning_rate: 1e-3    
+    min_lr: 2e-5
+    weight_decay: 0.0001
+    max_epoch: 500
+    plot_every: 200
+    save_every: 10
+    warmup: 0
+    loss_type: 'L1' # [L1, L2]
+    recon_weight: 10.
+    commit_weight: 1.
+
+load:
+    model_path: '/data/phd/liudan/data/emb_vqvae/exps/rqvae_L1loss_rqvae_CBsize256_CBdim16_CBhead4_lr_1.00e-03_2025-06-25-16:50:21'
+    epoch_id: 499
+
+
+dataset:
+    data_root: '/data/phd/liudan/data/embedding'
+    train_file: '/data/phd/liudan/data/embedding/train.pt'
+    test_file: '/data/phd/liudan/data/embedding/test.pt'
+    infer_file: '/data/phd/liudan/data/embedding/test.pt'
+    batch_size: 8192  # train batchsize; test batchsize is fixed as 8192
+    num_workers: 8

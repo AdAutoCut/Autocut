@@ -1,0 +1,53 @@
+experiment:
+    name: "rqvae_L2loss_outer_train"
+
+model:
+    type: "rqvae" # mhead
+    input_feature_size: 512
+    num_head: 8
+    codebook_sub_dim: 16
+    codebook_size: 512
+    pretrain_embedding_path: None
+    encoder_mlp_size: [512, 512, 512] # [512, 256, 128]
+    decoder_mlp_size: [512, 512, 512] # [512, 256, 128]
+    save_dir: '/data/jiajian/code/emb_vqvae/exps'
+
+wandb:
+    is_use: True
+    project: 'ContentID'
+
+infer:
+#    infer_path: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_1011_1018/photoid2SID_v2.txt'
+#    infer_path: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_1011_1018/photoid2SID_v3_user_seq.txt'
+#    infer_path: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_1011_1018/photoid2SID_v4_user_seq.txt'
+    infer_path: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_250101/photoid2SID_v4_part1.txt'
+
+trainer:
+    learning_rate: 1e-3    
+    min_lr: 2e-5
+    weight_decay: 0.0001
+    max_epoch: 100
+    plot_every: 100
+    save_every: 10
+    warmup: 0
+    loss_type: 'L2' # [L1, L2]
+    recon_weight: 50.
+    commit_weight: 1.
+
+load:
+#    model_path: '/data/jiajian/code/emb_vqvae/exps/rqvae_L1loss_outer350w_train_rqvae_CBsize512_CBdim16_CBhead8_lr_1.00e-03_2024-11-07-14:08:36'
+#    model_path: '/data/jiajian/code/emb_vqvae/exps/rqvae_L1loss_outer_train_rqvae_CBsize512_CBdim16_CBhead8_lr_1.00e-03_2024-11-07-19:47:27'
+    model_path: '/data/jiajian/code/emb_vqvae/exps/rqvae_L2loss_outer_train_ReconWeight50_rqvae_CBsize512_CBdim16_CBhead8_lr_1.00e-03_2024-11-08-11:09:41'
+    epoch_id: 99
+
+
+dataset:
+    data_root: '/phd/content_ID/outer_rank/quantizer/mmu_embedding'
+    train_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/recall_full/outer_full_revised_idx2photoid.pkl'
+    test_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_test_1011-1018.pkl'
+#    infer_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_all_1011-1018.pkl'
+#    infer_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_1011_1018_use_seq_20241204/idx2pid.pkl'
+#    infer_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_250101/emb_part1_idx2photoid.pkl'
+    infer_file: '/phd/content_ID/outer_rank/quantizer/mmu_embedding/ad_outer/online_training_250217/emb_idx2photoid.pkl'
+    batch_size: 8192  # train batchsize; test batchsize is fixed as 8192
+    num_workers: 8
